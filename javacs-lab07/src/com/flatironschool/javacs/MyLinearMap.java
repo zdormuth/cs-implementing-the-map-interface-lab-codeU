@@ -49,7 +49,7 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 		
 	@Override
 	public void clear() {
-		entries.clear();
+		entries.clear(); // implements this from ArrayList?
 	}
 
 	@Override
@@ -63,7 +63,14 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 	 * @param target
 	 */
 	private Entry findEntry(Object target) {
-        // TODO: fill this in
+        	// TODO: fill this in
+		for (int i = 0; i < entries.size(); i++)
+		{
+			if (equals(target, entries.get(i).getKey()))
+			{
+				return entries.get(i);
+			}
+		}
 		return null;
 	}
 
@@ -98,7 +105,14 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 
 	@Override
 	public V get(Object key) {
-        // TODO: fill this in.
+	        // TODO: fill this in.
+		for (int i = 0; i < entries.size(); i++)
+		{
+			if (equals(key, entries.get(i).getKey()))
+			{
+				return entries.get(i).getValue();
+			}
+		}
 		return null;
 	}
 
@@ -117,9 +131,25 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 	}
 
 	@Override
-	public V put(K key, V value) {
-        // TODO: fill this in.
-        return null;
+	public V put(K key, V value)
+	{
+        	// TODO: fill this in.
+		for (int i = 0; i < entries.size(); i++)
+		{
+			if (equals(key, entries.get(i).getKey()))
+			{
+				// set new value to key
+				V previous = entries.get(i).getValue();
+				entries.set(i, new Entry(key,value));
+				return previous;
+			}
+		}
+		if (!containsKey(key) || entries.size() == 0)
+		{
+			// add new entry
+			entries.add(0, new Entry(key, value));
+		}
+		return null;
 	}
 
 	@Override
@@ -131,8 +161,18 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 
 	@Override
 	public V remove(Object key) {
-        // TODO: fill this in.
-        return null;
+       		// TODO: fill this in.
+		// removes entry with key
+		for (int i = 0; i < entries.size(); i++)
+		{
+			if (equals(key, entries.get(i).getKey()))
+			{
+				V previous = entries.get(i).getValue();
+				entries.remove(i);
+				return previous;
+			}
+		}
+		return null;
 	}
 
 	@Override
